@@ -672,7 +672,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		var/output = "[inspec.Join()]"
 		if(!usr.client.prefs.no_examine_blocks)
 			output = examine_block(output)
-		to_chat(usr, output)	
+		to_chat(usr, output)
 
 /obj/item
 	var/simpleton_price = FALSE
@@ -1624,7 +1624,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		var/tier = temp_to_cold_tier(src.min_cold_protection_temperature)
 		var/covers = thermal_flags_to_zone_text(src.cold_protection)
 
-		out += "<b>COLD PROTECTION:</b> [tier]"
+		out += "<b>COLD RESISTANCE:</b> [tier]"
 		out += " | Insulates: [covers]"
 
 	// --- Heat ---
@@ -1632,13 +1632,13 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		var/tier = temp_to_heat_tier(src.max_heat_protection_temperature)
 		var/covers = thermal_flags_to_zone_text(src.heat_protection)
 
-		out += "<b>HEAT PROTECTION:</b> [tier]"
+		out += "<b>HEAT RESISTANCE:</b> [tier]"
 		out += " | Insulates: [covers]"
 
 	if(!length(out))
 		return null
 
-	return "<br><b><u>THERMAL PROTECTION:</u></b><br>" + jointext(out, "<br>")
+	return "<br><b><u>THERMAL RESISTANCE:</u></b><br>" + jointext(out, "<br>")
 
 /obj/item/obj_break(damage_flag)
 	..()
