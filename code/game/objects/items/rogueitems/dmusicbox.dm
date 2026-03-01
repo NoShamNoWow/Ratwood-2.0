@@ -1,3 +1,4 @@
+GLOBAL_LIST_EMPTY(musicboxes) //list of all music boxes
 
 /datum/looping_sound/dmusloop
 	mid_sounds = list()
