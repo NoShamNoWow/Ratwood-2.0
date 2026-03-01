@@ -64,7 +64,7 @@
 		H.set_blindness(0)
 		switch(fashion_choice)
 			if("Cunning Archer") //Robin Hood-esque outfit with a funny hat and a green rain cloak.
-				head = /obj/item/clothing/head/roguetown/duelhat
+				head = /obj/item/clothing/head/roguetown/archercap
 				cloak = /obj/item/clothing/cloak/raincloak/green
 			if("Ruthless Hunter") //Bloodborne-esque outfit with a longcoat and a tricorn.
 				head = /obj/item/clothing/head/roguetown/helmet/tricorn
