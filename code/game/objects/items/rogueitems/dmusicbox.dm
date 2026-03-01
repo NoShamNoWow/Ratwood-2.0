@@ -129,10 +129,12 @@ GLOBAL_VAR_INIT(musicboxes_last_upload, 0) //last time of the last upload, to pr
 	playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
 	if(!playing)
 		if(curfile)
-			if(!find_free_channel())
+			var/new_channel = find_free_channel()
+			if(!new_channel)
 				to_chat(user, span_warning("TOO MANY MUSIC BOXES IN USE AT THE SAME TIME IN THE WORLD."))
 				return
 			playing = TRUE
+			soundloop.channel = new_channel
 			soundloop.mid_sounds = list(curfile)
 			soundloop.cursound = null
 			soundloop.start()
@@ -156,14 +158,14 @@ GLOBAL_VAR_INIT(musicboxes_last_upload, 0) //last time of the last upload, to pr
 			if(CHANNEL_CMUSIC4)
 				free_channel &= ~8
 	if(!free_channel) // no channels free, abort
-		return FALSE
+		return 0
 
 	if(free_channel&1)
-		soundloop.channel = CHANNEL_CMUSIC1
-	else if(free_channel&2)
-		soundloop.channel = CHANNEL_CMUSIC2
-	else if(free_channel&4)
-		soundloop.channel = CHANNEL_CMUSIC3
-	else if(free_channel&8)
-		soundloop.channel = CHANNEL_CMUSIC4
-	return TRUE
+		return CHANNEL_CMUSIC1
+	if(free_channel&2)
+		return CHANNEL_CMUSIC2
+	if(free_channel&4)
+		return CHANNEL_CMUSIC3
+	if(free_channel&8)
+		return CHANNEL_CMUSIC4
+	return 0
