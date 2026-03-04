@@ -189,7 +189,10 @@ GLOBAL_LIST_EMPTY(overwatch_events) // List of lists, keyed by ckey
 		overwatch_add_event_for_ckey(attacker_ckey, event)
 
 /proc/overwatch_record_interact(mob/user, atom/target, action)
-	return
+	if(!user?.client?.ckey)
+		return
+	var/datum/overwatch_event/interact/event = new(user, target, action)
+	overwatch_add_event_for_ckey(user.client.ckey, event)
 
 // Visual marker system
 /obj/effect/overwatch_marker
@@ -371,3 +374,25 @@ GLOBAL_LIST_EMPTY(overwatch_events) // List of lists, keyed by ckey
 		message_admins("[key_name_admin(src)] used OVERWATCH event visualization for [ckey] (event #[event_index]).")
 	else
 		to_chat(src, span_warning("Location data not available for this attack."))
+
+// OVERWATCH: Admin right-click context menu verb for items.
+/client/proc/admin_view_item_overwatch_log(obj/item/I in world)
+	set name = "OVERWATCH Log"
+	set category = null
+	if(!holder)
+		return
+	if(!I || QDELETED(I))
+		return
+	var/html = "<b>OVERWATCH — Item Interaction Log</b><br>"
+	html += "<b>Item:</b> [I.name] ([I.type])<br>"
+	if(I.loc)
+		html += "<b>Location:</b> [AREACOORD(I)]<br>"
+	html += "<br>"
+	if(!I.item_overwatch_log || !I.item_overwatch_log.len)
+		html += "<i>No interactions recorded for this item yet.</i>"
+	else
+		for(var/entry in I.item_overwatch_log)
+			html += "[entry]<br>"
+	var/datum/browser/popup = new(src, "overwatch_item_[REF(I)]", "OVERWATCH - [I.name]", 480, 360)
+	popup.set_content(html)
+	popup.open()

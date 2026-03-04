@@ -97,6 +97,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	var/mob/thrownby = null
 
+	/// OVERWATCH: Recent interaction log for admins (right-click → OVERWATCH Log to view)
+	var/list/item_overwatch_log
+
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER //the icon to indicate this object is being dragged
 
 	var/datum/embedding_behavior/embedding
@@ -821,6 +824,12 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 	// OVERWATCH: Track item dropped
 	overwatch_record_interact(user, src, "dropped")
+	if(user?.client)
+		if(!item_overwatch_log)
+			item_overwatch_log = list()
+		item_overwatch_log += "[time_stamp()] dropped by [user.real_name] ([user.client.ckey])"
+		while(item_overwatch_log.len > 25)
+			item_overwatch_log.Remove(item_overwatch_log[1])
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Remove(user)
@@ -849,6 +858,12 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 	// OVERWATCH: Track item picked up
 	overwatch_record_interact(user, src, "picked up")
+	if(user?.client)
+		if(!item_overwatch_log)
+			item_overwatch_log = list()
+		item_overwatch_log += "[time_stamp()] picked up by [user.real_name] ([user.client.ckey])"
+		while(item_overwatch_log.len > 25)
+			item_overwatch_log.Remove(item_overwatch_log[1])
 	SEND_SIGNAL(src, COMSIG_ITEM_PICKUP, user)
 	item_flags |= IN_INVENTORY
 
@@ -877,6 +892,12 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 	// OVERWATCH: Track item equipped
 	overwatch_record_interact(user, src, "equipped")
+	if(user?.client)
+		if(!item_overwatch_log)
+			item_overwatch_log = list()
+		item_overwatch_log += "[time_stamp()] equipped by [user.real_name] ([user.client.ckey])"
+		while(item_overwatch_log.len > 25)
+			item_overwatch_log.Remove(item_overwatch_log[1])
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
 	SEND_SIGNAL(user, COMSIG_ITEM_EQUIPPED, src, slot)
 	for(var/X in actions)

@@ -260,6 +260,8 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 			
 			// Log it
 			log_admin_private("Ticket #[ticket.id]: [key_name(user)] -> [ticket.initiator_key_name]: [message]")
+			// Notify other admins in chat
+			message_admins(span_adminnotice("<font color='blue'>Ticket #[ticket.id] [ticket.TicketHref("Show Ticket")] - [key_name_admin(user)] replied to [ticket.initiator_key_name]: [message]</font>"))
 			
 			return TRUE
 		
@@ -522,6 +524,8 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 			if(ticket.initiator)
 				to_chat(ticket.initiator, span_adminhelp("<b>Admin [key_name_admin(user)] embedded a [embed_type] in your ticket.</b>"))
 			log_admin_private("Ticket #[ticket.id]: [key_name(user)] embedded [embed_type]: [url]")
+			// Notify other admins in chat with a placeholder - no raw URLs to prevent flashbanging
+			message_admins(span_adminnotice("<font color='blue'>Ticket #[ticket.id] [ticket.TicketHref("Show Ticket")] - [key_name_admin(user)] sent [ticket.initiator_key_name] an (embedded [embed_type]).</font>"))
 			return TRUE
 	
 	return FALSE
@@ -679,8 +683,8 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 /datum/admin_help/proc/MessageNoRecipient(msg, play_sound = TRUE)
 	msg = copytext_char(msg, 1, MAX_MESSAGE_LEN)
 	var/ref_src = "[REF(src)]"
-	// Simplified message to be sent to all admins, including title and a handle button
-	var/admin_msg = span_adminnotice("<span class='adminhelp'>Ticket #[id]: [name] ([initiator_ckey]) - [TicketHref("Show Ticket", ref_src)] [TicketHref("Handle", ref_src, "handleissue")]<br><span class='linkify'>[msg]</span></span>")
+	// Simplified message to be sent to all admins, including title and action links
+	var/admin_msg = span_adminnotice("<font color='#c87941'><b>Ticket #[id]: [name] ([initiator_ckey]) - [TicketHref("Show Ticket", ref_src)][ClosureLinks(ref_src)]</b><br><span class='linkify' style='font-weight:normal;color:#c9c1ba'>[msg]</span></font>")
 
 	AddInteraction("<font color='red'>[LinkedReplyName(ref_src)]: [msg]</font>")
 
