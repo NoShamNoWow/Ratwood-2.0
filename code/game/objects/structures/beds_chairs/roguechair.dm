@@ -330,17 +330,19 @@
 	var/broken_rate = 1.0
 
 /obj/structure/bed/rogue/proc/damage_bed(dam_value)
+	if(broken_matress)
+		playsound(src, pick(list('sound/misc/mat/table (1).ogg','sound/misc/mat/table (2).ogg','sound/misc/mat/table (3).ogg','sound/misc/mat/table (4).ogg')), 30, TRUE, ignore_walls = FALSE)
+		return
 	if(sleepy <= 2) // the bed is already pretty awful and broken (i.e: straw bed/bedroll), so don't break it even further
 		return
 	broken_percentage += (dam_value * broken_rate)
-	if(!broken_matress && (broken_percentage >= 100))
+	if(broken_percentage >= 100) // bed broken
+		broken_percentage = 100 // clamp
 		broken_matress = TRUE
 		sleepy = 1 //Worse than a bedroll, better than nothing
 		visible_message(span_warning("\The [src] gives an violent snap. It looks broken!"))
 		playsound(src, 'sound/misc/mat/bed break.ogg', 50, TRUE, ignore_walls = FALSE)
 		desc += " The bed looks stained and has seen better daes."
-	else if(broken_percentage >= 100) // clamp
-		broken_percentage = 100
 	else
 		playsound(src, pick(list('sound/misc/mat/bed squeak (1).ogg','sound/misc/mat/bed squeak (2).ogg','sound/misc/mat/bed squeak (3).ogg')), 25, TRUE, ignore_walls = FALSE)
 		if(broken_percentage > 10)
