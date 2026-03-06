@@ -305,71 +305,58 @@
 	beltl = /obj/item/rogueweapon/mace/cudgel
 	backr = /obj/item/storage/backpack/rogue/satchel
 	if(H.mind)
-		var/archetype = list("Deserter - Classic", "Bogguard - Bog Is Your Home", "Guerrilla - Melee-Ranged Hybrid", "Mercenary - Well-Paid", "Fanatic - Hard to Kill", "Highwayman - Equestrian", "Raider - Strength & Brutality", "Veteran - Skills over Stats")
-		var/archetype_choice = input (H, "Choose your archetype.", "WHAT DO YOU REGRET?") as anything in archetype
+		var/archetype = list("Heavy Infantry", "Light Infantry", "Bogguard/Cavalryman", "Feldsher", "Warcaster", "Veteran")
+		var/archetype_choice = input (H, "Choose your primary training.", "HOW DO YOU KILL?") as anything in archetype
 		switch(archetype_choice)
-			if("Deserter - Classic") //Master Athletics and Expert Swimming. Otherwise nothing special.
+			if("Heavy Infantry") //Classic Deserter. Master Athletics, Expert Swimming and Expert Shields. Otherwise nothing special.
 				H.adjust_skillrank_up_to(/datum/skill/misc/athletics, SKILL_LEVEL_MASTER, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/misc/swimming, SKILL_LEVEL_EXPERT, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_EXPERT, TRUE)
 				cloak = /obj/item/clothing/cloak/stabard/surcoat
-				to_chat(H, span_warning("You had your post. You had your duty. Dissatisfied, lacking in morale, or simply thinking yourself better than it, you decided to run away and find your own reason to fight."))
-			if("Bogguard - Bog Is Your Home") //Leech & Kneestinger Immunity. BOGGUARD LIVES!
-				if (istype (H.patron, /datum/patron/divine/dendor)) //Redundant for Dendorites, get Classic Deserter's bonuses instead.
-					H.adjust_skillrank_up_to(/datum/skill/misc/athletics, SKILL_LEVEL_MASTER, TRUE)
+				to_chat(H, span_warning("You trained to fight as a part of dense shield formations. This made you fit, but you didn't have a chance to pick up any other skills."))
+			if("Light Infantry") //Throwing weapons guy. Starts with steel javelins; +1 SPD and -1 STR; Journeyman in Sneaking.
+				H.change_stat(STATKEY_SPD, 1)
+				H.change_stat(STATKEY_STR, -1)
+				H.adjust_skillrank_up_to(/datum/skill/misc/sneaking, SKILL_LEVEL_JOURNEYMAN, TRUE)
+				cloak = /obj/item/clothing/cloak/poachercloak //Maybe you are a former Warden-Forester?
+				beltl = /obj/item/quiver/javelin/steel
+				l_hand = /obj/item/clothing/head/roguetown/roguehood/poacher
+				to_chat(H, span_warning("You trained to fight in loose formations, fighting"))
+			if("Bogguard/Cavalryman") //TRAIT_EQUESTRIAN, Expert Riding, Leech & Kneestinger Immunity. BOGGUARD LIVES!
+				ADD_TRAIT(H, TRAIT_EQUESTRIAN, TRAIT_GENERIC)
+				H.adjust_skillrank_up_to(/datum/skill/misc/riding, SKILL_LEVEL_EXPERT, TRUE)
+				if (istype (H.patron, /datum/patron/divine/dendor)) //Dendorites get Expert Swimming instead of redundant immunities.
 					H.adjust_skillrank_up_to(/datum/skill/misc/swimming, SKILL_LEVEL_EXPERT, TRUE)
 				else
 					ADD_TRAIT(H, TRAIT_LEECHIMMUNE, TRAIT_GENERIC)
 					ADD_TRAIT(H, TRAIT_KNEESTINGER_IMMUNITY, TRAIT_GENERIC)
 				cloak = /obj/item/clothing/cloak/stabard/bog
-				to_chat(H, span_warning("You and your brothers in arms fought for countless days and nights, defending the Vale from the undead. But when you asked for reinforcements or any manner of help, you were turned away as undesirables you are. Your sacrifice saved the realm, but your hatred for the Crown burns brighter for that. Only a few of you remain, but even then BOGGUARD LIVES!"))
-			if("Guerrilla - Melee-Ranged Hybrid") //Poor Man's Warden-Forester. Apprentice Trapmaking, Sneaking and Tracking; JMan Bows and Slings; starts with javelins; +1 SPD and -1 STR.
-				H.change_stat(STATKEY_SPD, 1)
+				to_chat(H, span_warning("You trained in equestrianism and traversing treacherous terrains. The local bog is no less than a second home for you."))
+			if("Feldsher") //Expert Medicine and a surgery bag. No TRAIT_MEDICINE_EXPERT, so you can't progress past Expert without somebody taking you on as their medicine apprentice.
+				H.adjust_skillrank_up_to(/datum/skill/misc/medicine, SKILL_LEVEL_EXPERT, TRUE)
+				cloak = /obj/item/clothing/suit/roguetown/shirt/robe/feld
+				beltl = /obj/item/storage/belt/rogue/surgery_bag
+				to_chat(H, span_warning("You were a field chirurgeon, a healer rather than a killer. In time, you learned how to murder and became both."))
+			if("Warcaster") //Wretch Spellblade that's not exclusive to racist elfs! T2 Arcyne, Magearmor, Apprentice Arcyne, 12 spell points, but worse stats -- weighted stat total of +5.
+				ADD_TRAIT(H, TRAIT_ARCYNE_T2, TRAIT_GENERIC)
+				ADD_TRAIT(H, TRAIT_MAGEARMOR, TRAIT_GENERIC)
 				H.change_stat(STATKEY_STR, -1)
-				H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_JOURNEYMAN, TRUE)
-				H.adjust_skillrank_up_to(/datum/skill/combat/slings, SKILL_LEVEL_JOURNEYMAN, TRUE)
-				H.adjust_skillrank_up_to(/datum/skill/craft/traps, SKILL_LEVEL_APPRENTICE, TRUE)
-				H.adjust_skillrank_up_to(/datum/skill/misc/sneaking, SKILL_LEVEL_APPRENTICE, TRUE)
-				H.adjust_skillrank_up_to(/datum/skill/misc/tracking, SKILL_LEVEL_APPRENTICE, TRUE)
-				cloak = /obj/item/clothing/cloak/poachercloak //Maybe you are a former Warden-Forester?
-				beltl = /obj/item/quiver/javelin/steel
-				l_hand = /obj/item/clothing/head/roguetown/roguehood/poacher
-				to_chat(H, span_warning("Amongst flowers, between bushes and beneath trees you wage your little war. What you lack in numbers and raw strength you shall make up in dexterity and agility."))
-			if("Mercenary - Well-Paid") //More money on spawn, slightly better starting armour and less Sharpness loss in combat.
-				ADD_TRAIT(H, TRAIT_SHARPER_BLADES, TRAIT_GENERIC)
-				cloak = /obj/item/clothing/cloak/half/red
-				gloves = /obj/item/clothing/gloves/roguetown/plate
-				shoes = /obj/item/clothing/shoes/roguetown/boots/armor
-				l_hand = /obj/item/storage/belt/rogue/pouch/coins/mid
-				to_chat(H, span_warning("You were a professional, but one day business turned personal and you ran afoul of the law. Luckily, your purse has got only heavier after you cut down all middlemen."))
-			if("Fanatic - Hard to Kill") //Alternative stat spread focused on WIL and CON, Hard to Dismember.
-				ADD_TRAIT(H, TRAIT_HARDDISMEMBER, TRAIT_GENERIC)
-				H.change_stat(STATKEY_CON, 2)
-				H.change_stat(STATKEY_WIL, 2)
-				H.change_stat(STATKEY_STR, -1)
-				H.change_stat(STATKEY_SPD, -1)
-				cloak = /obj/item/clothing/cloak/tabard
-				to_chat(H, span_warning("You were a militant for a particularly violent religious sect. Your body and mind were subjected to countless punishments as a part of your training, and for that you became stronger."))
-			if("Highwayman - Equestrian") //TRAIT_EQUESTRIAN and Expert Riding. Disgraced Knight for people who don't like playing a noble.
-				ADD_TRAIT(H, TRAIT_EQUESTRIAN, TRAIT_GENERIC)
-				H.adjust_skillrank_up_to(/datum/skill/misc/riding, SKILL_LEVEL_EXPERT, TRUE)
-				cloak = /obj/item/clothing/cloak/stabard/surcoat
-				to_chat(H, span_warning("You and your steed are partners in crime. Forgoing pretense and preludes, you swiftly attack travellers on roads and leave them penniless and stunned."))
-			if("Raider - Strength & Brutality") //Alternative stat spread focused on STR and CON, can safely rob graves and has strong bites.
-				ADD_TRAIT(H, TRAIT_STRONGBITE, TRAIT_GENERIC)
-				ADD_TRAIT(H, TRAIT_GRAVEROBBER, TRAIT_GENERIC)
-				H.change_stat(STATKEY_STR, 1)
-				H.change_stat(STATKEY_CON, 1)
-				H.change_stat(STATKEY_WIL, -2)
+				H.change_stat(STATKEY_CON, -1)
 				H.change_stat(STATKEY_PER, -1)
-				cloak = /obj/item/clothing/cloak/raincloak/furcloak/brown
-				to_chat(H, span_warning("They call you a savage, a barbarian, a monster. But you are simply making ends meet by taking what others aren't strong enough to protect."))
-			if("Veteran - Skills over Stats") //Master in primary weapon skills and Expert in Knives and Shields, but worse stats -- weighted stat total of +5.
+				H.mind?.adjust_spellpoints(12)
+				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/airblade)
+				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/enchant_weapon)
+				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/conjure_weapon)
+				cloak = /obj/item/clothing/cloak/tabard
+				to_chat(H, span_warning("You trained in the difficult skill of casting magic while clad in burdening armour. Your training paid off, but left little time or energy for physical education."))
+			if("Veteran - Skills over Stats") //Master in primary weapon skills and Expert in all other weapon skills except Unarmed, but worse stats -- weighted stat total of +5.
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_MASTER, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_MASTER, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_MASTER, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_MASTER, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_EXPERT, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_EXPERT, TRUE)
 				H.change_stat(STATKEY_INT, 1)
 				H.change_stat(STATKEY_STR, -1)
