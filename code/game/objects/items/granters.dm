@@ -176,7 +176,6 @@
 	desc = "A worn manual of Kazengunite smithing techniques, dense with diagrams and characters. The cover bears the mark of the Kouken order. Requires knowledge of Kazengunese to decipher."
 	icon = 'icons/roguetown/items/books.dmi'
 	icon_state = "basic_book_0"
-	base_icon_state = "basic_book"
 	granted_trait = TRAIT_KAZENGUNITE_SMITH
 	required_language = /datum/language/kazengunese
 	pages_to_mastery = 10
