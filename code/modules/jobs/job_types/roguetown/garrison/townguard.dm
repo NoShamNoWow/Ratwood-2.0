@@ -103,7 +103,7 @@
 	..()
 	H.adjust_blindness(-3)
 	if(H.mind)
-		var/weapons = list("Stunmace & Shield","Maul - 14STR Minimum", "Crossbow")
+		var/weapons = list("Stunmace & Shield","Polehammer", "Maul - 14STR Minimum", "Crossbow")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
@@ -111,6 +111,10 @@
 				r_hand = /obj/item/rogueweapon/mace/stunmace
 				backl = /obj/item/rogueweapon/shield/heater
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
+			if("Polehammer")
+				r_hand = /obj/item/rogueweapon/eaglebeak
+				backl = /obj/item/rogueweapon/scabbard/gwstrap
+				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
 			if("Maul - 14STR Minimum")
 				r_hand = /obj/item/rogueweapon/mace/maul
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
