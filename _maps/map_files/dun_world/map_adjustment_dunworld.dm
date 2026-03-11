@@ -9,6 +9,8 @@
 	realm_name = "Rotwood Vale"
 	blacklist = list(
 		/datum/job/roguetown/vanguard,
+		/datum/job/roguetown/guardsman,
+		/datum/job/roguetown/rookie
 	)
 	slot_adjust = list(
 		/datum/job/roguetown/warden = 6,
