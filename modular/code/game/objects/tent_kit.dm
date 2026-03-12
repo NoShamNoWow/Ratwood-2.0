@@ -1,28 +1,13 @@
-// === GLOBAL HELPERS ===
 /proc/is_openspace(atom/A)
 	if(!A) return FALSE
 	var/turf/T = get_turf(A)
-	if(!T) return FALSE
-
-	// Check if it's the specific openspace turf
-	if(istype(T, /turf/open/transparent/openspace))
-		return TRUE
-
-	// Check for various "space" paths safely without crashing the compiler
-	var/static/list/space_paths = list("/turf/space", "/turf/open/space", "/turf/template/space")
-	for(var/path_text in space_paths)
-		var/resolved_path = text2path(path_text)
-		if(resolved_path && istype(T, resolved_path))
-			return TRUE
-
-	return FALSE
+	return istype(T, /turf/open/transparent/openspace)
 
 // === BASE TENT COMPONENT ===
-// Both walls and doors inherit this, defining the variable once for everything.
 /obj/structure/tent_component
     var/obj/item/tent_kit/parent_tent = null
     anchored = TRUE
-    invisibility = 0 // Explicitly forces visibility so it doesn't inherit the kit's invisibility
+    invisibility = 0
 
 // === TENT KIT ITEM ===
 /obj/item/tent_kit
@@ -37,7 +22,7 @@
     var/list/obj/structure/tent_wall/tent_walls = list()
     var/list/obj/structure/roguetent/tent_doors = list()
     var/list/turf/roof_tiles = list()
-    var/list/turf/roof_turfs = list() // Tracks spawned upper floors
+    var/list/turf/roof_turfs = list()
     
     var/tent_width = 3 
     var/tent_length = 4 
@@ -46,6 +31,9 @@
     var/door_style = "both"
     var/setup_time = 10 SECONDS
     var/roof_covers_doors = FALSE
+
+    var/setup_cooldown_end = 0
+    var/cooldown_duration = 600
 
     // Repair & Damage vars
     var/repair_debt_cloth = 0
@@ -94,6 +82,10 @@
 
 /obj/item/tent_kit/attack_self(mob/user)
     if(assembled) return
+    if(world.time < setup_cooldown_end)
+        var/remaining = round((setup_cooldown_end - world.time) / 10)
+        to_chat(user, span_warning("This tent was recently packed up. You must wait [remaining] second\s before setting it up again."))
+        return
     var/turf/setup_turf = get_turf(user)
     if(!setup_turf) return
     var/assembly_dir = user.dir
@@ -193,6 +185,13 @@
 
     return coords
 
+/obj/item/tent_kit/proc/get_wall_dir(turf/center_turf, turf/wall_turf)
+	var/dx = wall_turf.x - center_turf.x
+	var/dy = wall_turf.y - center_turf.y
+	if(abs(dx) >= abs(dy))
+		return (dx > 0) ? EAST : WEST
+	return (dy > 0) ? NORTH : SOUTH
+
 /obj/item/tent_kit/proc/get_tent_coordinates(turf/center_turf, assembly_dir)
     var/list/coords = list()
     var/x_start = -round((tent_width - 1) / 2)
@@ -208,23 +207,6 @@
             else
                 T = locate(center_turf.x + y, center_turf.y + x, center_turf.z)
             if(T) coords += T
-    return coords
-
-/obj/item/tent_kit/proc/get_upper_tent_coordinates(turf/center_turf, assembly_dir)
-    var/list/coords = list()
-    var/rx_start = -round((roof_width - 1) / 2)
-    var/rx_end = round(roof_width / 2)
-    var/ry_start = -round((roof_length - 1) / 2)
-    var/ry_end = round(roof_length / 2)
-    for(var/x = rx_start to rx_end)
-        for(var/y = ry_start to ry_end)
-            var/turf/T
-            if(assembly_dir in list(NORTH, SOUTH))
-                T = locate(center_turf.x + x, center_turf.y + y, center_turf.z)
-            else
-                T = locate(center_turf.x + y, center_turf.y + x, center_turf.z)
-            var/turf/upper_T = GET_TURF_ABOVE(T)
-            if(upper_T) coords += upper_T
     return coords
 
 /obj/item/tent_kit/proc/get_door_coordinates(turf/center_turf, assembly_dir)
@@ -269,7 +251,7 @@
         var/obj/structure/tent_wall/wall = available_walls[1]
         available_walls.Cut(1, 2)
         wall.forceMove(wall_turf)
-        // FORCE VISIBILITY RESET
+        wall.dir = get_wall_dir(center_turf, wall_turf)
         wall.invisibility = 0
         wall.alpha = 255
         RegisterSignal(wall, COMSIG_PARENT_QDELETING, PROC_REF(part_destroyed))
@@ -288,23 +270,22 @@
         var/obj/structure/tent_wall/wall = available_walls[1]
         available_walls.Cut(1, 2)
         wall.forceMove(upper_wall_turf)
+        wall.dir = get_wall_dir(center_turf, upper_wall_turf)
         wall.name = "tent roof wall"
         wall.invisibility = 0
         wall.alpha = 255
         RegisterSignal(wall, COMSIG_PARENT_QDELETING, PROC_REF(part_destroyed))
 
-    // --- DOORS (The Flaps) ---
+    // --- DOORS ---
     for(var/turf/door_turf in door_coords)
         if(!available_doors.len) break
         var/obj/structure/roguetent/door = available_doors[1]
         available_doors.Cut(1, 2)
-        
         door.forceMove(door_turf)
-        door.invisibility = 0 // Explicitly visible
-        door.alpha = 255      // Ensure no transparency issues
-        door.density = TRUE   // Start closed (matches standard tent behavior)
-        door.update_icon()    // FORCE the icon to refresh after moving!
-        
+        door.invisibility = 0
+        door.alpha = 255
+        door.density = TRUE
+        door.update_icon()
         RegisterSignal(door, COMSIG_PARENT_QDELETING, PROC_REF(part_destroyed))
 
     // --- INTERNAL ROOF LOGIC ---
@@ -314,7 +295,7 @@
         roof_tiles += T
 
     assembled = TRUE
-    forceMove(center_turf) // Move the kit to the center
+    forceMove(center_turf)
     anchored = TRUE
     invisibility = INVISIBILITY_MAXIMUM 
     mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -348,6 +329,7 @@
     invisibility = initial(invisibility)
     mouse_opacity = initial(mouse_opacity)
     if(user) forceMove(get_turf(user))
+    setup_cooldown_end = world.time + cooldown_duration
 
 /obj/item/tent_kit/proc/part_destroyed(obj/source)
     parts_destroyed_count++
@@ -418,6 +400,7 @@
     setup_time = 30 SECONDS
     collapse_threshold = 5 
     roof_covers_doors = TRUE
+    cooldown_duration = 1200
 
 // === CRAFTING ===
 /datum/crafting_recipe/roguetown/sewing/tentkit

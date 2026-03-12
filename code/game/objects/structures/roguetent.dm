@@ -1,27 +1,18 @@
 /obj/structure/roguetent
     parent_type = /obj/structure/tent_component
     name = "tent flap"
-    icon = 'icons/turf/roguewall.dmi' 
+    icon = 'icons/turf/roguewall.dmi'
     icon_state = "tent_door1"
-    layer = WALL_OBJ_LAYER // High priority layer
+    layer = WALL_OBJ_LAYER
     plane = GAME_PLANE
     density = TRUE
     opacity = TRUE
     var/base_state = "tent_door"
 
 /obj/structure/roguetent/update_icon()
-    // Safety check: ensure these states actually exist in your DMI
-    if(density)
-        icon_state = "[base_state][pick("1","2")]"
-    else
-        icon_state = "[base_state]0"
-    
-    // Final fallback if the icon_state logic fails
-    if(!icon_state)
-        icon_state = "tent_door1"
+    icon_state = density ? "[base_state][pick("1","2")]" : "[base_state]0"
     return ..()
 
-// Shift-Click interaction merged here cleanly
 /obj/structure/roguetent/ShiftClick(mob/user)
     if(!parent_tent || !parent_tent.assembled) return ..()
     
@@ -30,7 +21,7 @@
         to_chat(user, span_warning("You can only dismantle the tent from the inside!"))
         return TRUE
 
-    if(get_dist(user, src) > 1) 
+    if(get_dist(user, src) > 1)
         to_chat(user, span_warning("You are too far away!"))
         return TRUE
 
@@ -38,12 +29,6 @@
     if(confirm == "Yes" && get_dist(user, src) <= 1)
         parent_tent.disassemble_tent(user)
     return TRUE
-
-/obj/structure/roguetent/update_icon()
-    if(density)
-        icon_state = "[base_state][pick(1,2)]"
-    else
-        icon_state = "[base_state]0"
 
 /obj/structure/roguetent/proc/open_up(mob/user)
     visible_message(span_info("[user] opens [src]."))
