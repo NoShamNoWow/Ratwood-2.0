@@ -104,7 +104,6 @@
 		else
 			to_chat(src, "Others can't touch you.")
 
-<<<<<<< HEAD
 /client/verb/toggle_Chastity() // Alters whether the user can see or interact with any content related to chastity devices, including the devices themselves, actions that target them, and messages related to them. This is intended for users who want to avoid accidentally encountering this content, but still want to be able to use the game without missing out on unrelated features.
 	set category = "Options"
 	set name = "Toggle Chastity Content"
@@ -119,9 +118,6 @@
 			to_chat(src, "Chastity content disabled.")
 
 /client/verb/toggle_compliance_notifs() // The messages need to be on-by-default while this is in its early stages.
-=======
-/client/verb/toggle_compliance_notifs()
->>>>>>> 3b4d1319b6864db7f0565f8173dfcfd332cf3bf8
 	set category = "Options"
 	set name = "Toggle Compliance Notifs"
 	if(prefs)

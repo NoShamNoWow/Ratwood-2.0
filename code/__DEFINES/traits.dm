@@ -506,7 +506,6 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_BAOTHA_FERTILITY_BOON = span_info("I have been marked by Baotha. I am branded visibly on my groin and am able to be impregnated regardless of physical states that would usually prevent this"),
 	TRAIT_FUSILIER = span_suppradio("I've been trained in the safe use of smokepowder. Additionally, knowledge above <b><u>journeyman</u></b> status is attainable."),
 	TRAIT_HEMOPHAGE = span_bloody("Nothing but lyfeblood will keep me alive..."),
-<<<<<<< HEAD
 	TRAIT_CHASTITY_FULL = span_info("My chastity device prevents me from engaging in most penetrative sex."),
 	TRAIT_CHASTITY_CAGE = span_info("My chastity device prevents me getting an erection or engaging in penetrative sex."),
 	TRAIT_CHASTITY_PENIS_BLOCKED = span_info("My chastity device blocks access to my penis."),
@@ -514,10 +513,8 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_CHASTITY_ANAL = span_info("My chastity device is equipped with a shield that protects my anus from penetration."),
 	TRAIT_CHASTITY_SPIKED = span_info("My chastity device is equipped with spikes constantly pressing against my nethers."),
 	TRAIT_CHASTITY_LOCKED = span_info("My chastity device is locked, it's impossible to remove without the key.")
-=======
 	TRAIT_GANG_A = span_info("I belong to the Rontz Ratz gang"),
 	TRAIT_GANG_B = span_info("I belong to the Blortz Volves gang")
->>>>>>> 3b4d1319b6864db7f0565f8173dfcfd332cf3bf8
 ))
 
 // trait accessor defines
