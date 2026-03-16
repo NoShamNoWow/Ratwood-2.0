@@ -207,7 +207,7 @@
 	name = "Weerdoe"
 
 /datum/mob_descriptor/stature/plump
-	name = "Plump figure"
+	name = "Plump Figure"
 
 /datum/mob_descriptor/stature/savant
 	name = "Savant"
@@ -238,6 +238,9 @@
 
 /datum/mob_descriptor/stature/ascetic
 	name = "Ascetic"
+
+/datum/mob_descriptor/stature/sort
+	name = "Sort"
 
 /datum/mob_descriptor/stature/sprite
 	name = "Sprite"
