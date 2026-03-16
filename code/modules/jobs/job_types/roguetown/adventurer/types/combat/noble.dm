@@ -61,7 +61,7 @@
 	tutorial = "You are a knight from a distant land, a scion of a noble house visiting The Vale for one reason or another."
 	outfit = /datum/outfit/job/roguetown/adventurer/knighte
 	subclass_social_rank = SOCIAL_RANK_MINOR_NOBLE
-	traits_applied = list(TRAIT_NOBLE, TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED)
+	traits_applied = list(TRAIT_NOBLE, TRAIT_HEAVYARMOR)
 	subclass_stats = list(
 		STATKEY_STR = 2,
 		STATKEY_CON = 1,
@@ -69,7 +69,7 @@
 		STATKEY_INT = 1,
 	)
 	subclass_skills = list(
-		/datum/skill/misc/riding = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/riding = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/polearms = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/maces = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/swords = SKILL_LEVEL_APPRENTICE,
@@ -83,6 +83,7 @@
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
 	)
+	
 	virtue_restrictions = list(
 		/datum/virtue/utility/riding
 	)
