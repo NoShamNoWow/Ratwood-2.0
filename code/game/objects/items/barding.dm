@@ -16,7 +16,6 @@
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
 	sewrepair = TRUE
-	chunkcolor = "#5e5e5e"
 	salvage_result = /obj/item/natural/cloth
 	salvage_amount = 1
 	fiber_salvage = TRUE
