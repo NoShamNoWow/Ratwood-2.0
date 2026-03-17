@@ -188,7 +188,6 @@
 	name = "Harrowed"
 	prefix = "is very"
 
-
 /datum/mob_descriptor/trait/horned
 	name = "Horned"
 	prefix = "is very"

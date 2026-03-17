@@ -128,29 +128,26 @@
 		/datum/mob_descriptor/stature/host,
 		/datum/mob_descriptor/stature/widower,
 		/datum/mob_descriptor/stature/ruffian,
-
 		/datum/mob_descriptor/stature/sprite,
 		/datum/mob_descriptor/stature/debutante,
 		/datum/mob_descriptor/stature/coquette,
 		/datum/mob_descriptor/stature/songbird,
-
 		/datum/mob_descriptor/stature/dignitary,
 		/datum/mob_descriptor/stature/archon,
 		/datum/mob_descriptor/stature/vizier,
 		/datum/mob_descriptor/stature/highbrow,
 		/datum/mob_descriptor/stature/snob,
 		/datum/mob_descriptor/stature/socialite,
-
 		/datum/mob_descriptor/stature/gallant,
 		/datum/mob_descriptor/stature/valiant,
 		/datum/mob_descriptor/stature/samaritan,
 		/datum/mob_descriptor/stature/caretaker,
-
 		/datum/mob_descriptor/stature/scholar,
 		/datum/mob_descriptor/stature/bookworm,
 		/datum/mob_descriptor/stature/savant,
 		/datum/mob_descriptor/stature/pupil,
 		/datum/mob_descriptor/stature/dreamer,
+		/datum/mob_descriptor/stature/sort,
 		/datum/mob_descriptor/stature/stoic,
 		/datum/mob_descriptor/stature/hermit,
 		/datum/mob_descriptor/stature/recluse,
@@ -159,14 +156,12 @@
 		/datum/mob_descriptor/stature/penitent,
 		/datum/mob_descriptor/stature/mourner,
 		/datum/mob_descriptor/stature/hag,
-
 		/datum/mob_descriptor/stature/adventurer,
 		/datum/mob_descriptor/stature/daredevil,
 		/datum/mob_descriptor/stature/soldier,
 		/datum/mob_descriptor/stature/hunter,
 		/datum/mob_descriptor/stature/wanderer,
 		/datum/mob_descriptor/stature/firebrand,
-
 		/datum/mob_descriptor/stature/rogue,
 		/datum/mob_descriptor/stature/beguiler,
 		/datum/mob_descriptor/stature/hustler,
@@ -183,7 +178,6 @@
 		/datum/mob_descriptor/stature/blaggard,
 		/datum/mob_descriptor/stature/creep,
 		/datum/mob_descriptor/stature/slob,
-
 		/datum/mob_descriptor/stature/pushover,
 		/datum/mob_descriptor/stature/stooge,
 		/datum/mob_descriptor/stature/fool,
@@ -292,6 +286,7 @@
 		/datum/mob_descriptor/chitin/hard,
 		/datum/mob_descriptor/chitin/fine,
 	)
+
 /datum/descriptor_choice/height
 	name = "Height"
 	default_descriptor = /datum/mob_descriptor/height/moderate
@@ -305,6 +300,7 @@
 		/datum/mob_descriptor/height/tiny,
 		/datum/mob_descriptor/height/giant,
 	)
+
 /datum/descriptor_choice/trait
 	name = "Physical Descriptor"
 	default_descriptor = /datum/mob_descriptor/trait/moderate
@@ -312,7 +308,6 @@
 		/datum/mob_descriptor/trait/moderate,
 		/datum/mob_descriptor/trait/mundane,
 		/datum/mob_descriptor/trait/middling,
-
 		/datum/mob_descriptor/trait/tall,
 		/datum/mob_descriptor/trait/towering,
 		/datum/mob_descriptor/trait/giant,
@@ -325,10 +320,8 @@
 		/datum/mob_descriptor/trait/thin,
 		/datum/mob_descriptor/trait/graceful,
 		/datum/mob_descriptor/trait/scrappy,
-
 		/datum/mob_descriptor/trait/cadaverous,
 		/datum/mob_descriptor/trait/harrowed,
-
 		/datum/mob_descriptor/trait/zardish,
 		/datum/mob_descriptor/trait/lupian,
 		/datum/mob_descriptor/trait/venardic,
@@ -340,12 +333,10 @@
 		/datum/mob_descriptor/trait/simian,
 		/datum/mob_descriptor/trait/bovine,
 		/datum/mob_descriptor/trait/cervine,
-
 		/datum/mob_descriptor/trait/blessed,
 		/datum/mob_descriptor/trait/accursed,
 		/datum/mob_descriptor/trait/fervent,
 		/datum/mob_descriptor/trait/aquatic,
-
 		/datum/mob_descriptor/trait/horned,
 		/datum/mob_descriptor/trait/snoutly,
 		/datum/mob_descriptor/trait/tailed,
@@ -355,7 +346,6 @@
 		/datum/mob_descriptor/trait/furred,
 		/datum/mob_descriptor/trait/feathered,
 		/datum/mob_descriptor/trait/scaly,
-
 		/datum/mob_descriptor/trait/curious,
 		/datum/mob_descriptor/trait/cheery,
 		/datum/mob_descriptor/trait/jaunty,
@@ -367,7 +357,6 @@
 		/datum/mob_descriptor/trait/crestfallen,
 		/datum/mob_descriptor/trait/dour,
 		/datum/mob_descriptor/trait/stern,
-
 		/datum/mob_descriptor/trait/pale,
 		/datum/mob_descriptor/trait/tanned,
 		/datum/mob_descriptor/trait/dusky,
@@ -375,7 +364,6 @@
 		/datum/mob_descriptor/trait/cerulean,
 		/datum/mob_descriptor/trait/emerald,
 		/datum/mob_descriptor/trait/amber,
-
 	)
 
 /datum/descriptor_choice/skin_all
