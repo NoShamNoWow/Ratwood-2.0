@@ -2089,7 +2089,12 @@ GLOBAL_LIST_EMPTY(loadout_items)
 
 /datum/loadout_item/otavansatchel
 	name = "Otavan Satchel"
-	path = /obj/item/storage/backpack/rogue/otavan
+	path = /obj/item/storage/backpack/rogue/satchel/otavan
+	triumph_cost = 5
+
+/datum/loadout_item/heartfeltsatchel
+	name = "Heartfelt Satchel"
+	path = /obj/item/storage/backpack/rogue/satchel/heartfelt
 	triumph_cost = 5
 
 /datum/loadout_item/shortsatchel
