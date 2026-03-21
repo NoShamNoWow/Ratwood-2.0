@@ -48,7 +48,7 @@
 		/obj/item/paper/scroll/writ_of_esteem/zybantine = 1,
 		/obj/item/natural/feather = 1,
 		/obj/item/paper/scroll = 2,
-		/obj/item/storage/belt/pouch/coins/veryrich = 2,
+		/obj/item/storage/belt/rogue/pouch/coins/veryrich = 2,
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpotnew = 2,
 		)
 	H.cmode_music = 'sound/music/combat_desertrider.ogg'
@@ -108,7 +108,7 @@
 		/obj/item/rogueweapon/scabbard/sheath = 1,
 		/obj/item/natural/feather = 1,
 		/obj/item/paper/scroll = 2,
-		/obj/item/storage/belt/pouch/coins/veryrich = 2,
+		/obj/item/storage/belt/rogue/pouch/coins/veryrich = 2,
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpotnew = 1,
 	)
 	H.cmode_music = 'sound/music/combat_desertrider.ogg'
@@ -223,7 +223,7 @@
 		/obj/item/rogueweapon/huntingknife/idagger/steel = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
 		/obj/item/paper/scroll = 2,
-		/obj/item/storage/belt/pouch/coins/veryrich = 1,
+		/obj/item/storage/belt/rogue/pouch/coins/veryrich = 1,
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpotnew = 2,
 		)
 	H.cmode_music = 'sound/music/combat_desertrider.ogg'
