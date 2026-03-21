@@ -27,6 +27,9 @@
 	if(!anchored)
 		return FALSE
 
+	if(has_buckled_mobs())
+		return FALSE
+
 	if(force)
 		return ..()
 
