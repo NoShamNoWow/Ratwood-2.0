@@ -173,6 +173,7 @@ GLOBAL_LIST_EMPTY(heretical_players)
 /mob/living/carbon/human/proc/coronate_lord()
 	set name = "Coronate"
 	set category = "Priest"
+	to_chat (src, span_warning("The process of crowning a new ruler, and binding his soul to the Throne of the Vale takes a most heavy toil. Any newly coronated Noble Liege will not be able to be revived. You should probably mention this."))
 	if(!mind)
 		return
 	if(world.time < 30 MINUTES)
