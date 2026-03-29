@@ -35,6 +35,7 @@ GLOBAL_LIST_INIT(chastity_standard_traits, list(
 // form the full /obj/item/chastity type; this split is purely a compile-order requirement.
 /obj/item/chastity
 	name = "chastity belt"
+	always_show_examine_link = TRUE
 	desc = "A unisex metal device designed to prevent penetrative sex. It has a lock on the front, and encloses the groin area behind robust iron bars. For the devout."
 	icon = 'modular/icons/obj/lewd/chastity.dmi'
 	icon_state = "cage_belt"

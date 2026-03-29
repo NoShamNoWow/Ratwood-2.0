@@ -33,6 +33,17 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 			target_item != chastity_device && \
 			!(chastity_device && target_item == chastity_device.attached_toy))
 			return
+		var/is_chastity_item = (target_item == chastity_device)
+		var/is_chastity_attached_toy = (chastity_device && target_item == chastity_device.attached_toy)
+		if(!observer_privilege && (is_chastity_item || is_chastity_attached_toy))
+			if(!get_location_accessible(src, BODY_ZONE_PRECISE_GROIN))
+				return
+			var/perception_level = 15
+			if(isliving(usr))
+				var/mob/living/L = usr
+				perception_level = L.STAPER
+			if(perception_level < 8)
+				return
 		if(!target_item.has_customized_identity() && !target_item.always_show_examine_link)
 			return
 		var/list/item_examine = target_item.examine(usr)
