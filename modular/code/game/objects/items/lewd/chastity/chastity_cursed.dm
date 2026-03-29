@@ -39,24 +39,7 @@
 	return TRUE
 
 /obj/item/chastity/proc/get_tally_increment_for_source(mob/living/carbon/human/source)
-	if(!source?.sexcon)
-		return 1
-	if(!source.sexcon.double_penis_type())
-		return 1
-
-	var/action_type = source.sexcon.current_action
-	if(ispath(action_type, /datum/sex_action/anal_sex/double))
-		return 2
-	if(ispath(action_type, /datum/sex_action/vaginal_sex/double))
-		return 2
-	if(ispath(action_type, /datum/sex_action/slit_sex/double))
-		return 2
-	if(ispath(action_type, /datum/sex_action/throat_sex/double))
-		return 2
-	if(ispath(action_type, /datum/sex_action/double_penetration_sex))
-		return 2
-
-	return 1
+	return tally_increment_for_ejaculation_source(source)
 
 /obj/item/chastity/proc/reset_received_cum_count()
 	received_cum_count = 0

@@ -235,6 +235,28 @@
 		return TRUE
 	return FALSE
 
+/// Returns 2 if the source's active sex action involves a double-penetration event, otherwise 1.
+/// Shared logic used by both cursed collar and cursed chastity tally systems.
+/proc/tally_increment_for_ejaculation_source(mob/living/carbon/human/source)
+	if(!source?.sexcon)
+		return 1
+	if(!source.sexcon.double_penis_type())
+		return 1
+
+	var/action_type = source.sexcon.current_action
+	if(ispath(action_type, /datum/sex_action/anal_sex/double))
+		return 2
+	if(ispath(action_type, /datum/sex_action/vaginal_sex/double))
+		return 2
+	if(ispath(action_type, /datum/sex_action/slit_sex/double))
+		return 2
+	if(ispath(action_type, /datum/sex_action/throat_sex/double))
+		return 2
+	if(ispath(action_type, /datum/sex_action/double_penetration_sex))
+		return 2
+
+	return 1
+
 /// Records a non-self received ejaculation event on a receiver's cursed control item (collar or chastity), if present.
 /datum/sex_controller/proc/modular_record_collar_receive_event(mob/living/carbon/human/receiver, mob/living/carbon/human/source)
 	if(!receiver || !source)
@@ -245,6 +267,7 @@
 	var/obj/item/clothing/neck/roguetown/cursed_collar/collar = receiver.get_item_by_slot(SLOT_NECK)
 	var/obj/item/chastity/chastity = receiver.chastity_device
 	if(istype(collar) && istype(chastity) && chastity.chastity_cursed)
+		log_world("modular_record_collar_receive_event: [receiver] has both cursed collar and cursed chastity — invariant violated, skipping.")
 		return FALSE
 
 	if(istype(collar))

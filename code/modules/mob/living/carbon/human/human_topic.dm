@@ -29,7 +29,9 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 		var/obj/item/target_item = locate(href_list["item_ref"])
 		if(!istype(target_item))
 			return
-		if(!(target_item in held_items) && !(target_item in get_equipped_items(TRUE)))
+		if(!(target_item in held_items) && !(target_item in get_equipped_items(TRUE)) && \
+			target_item != chastity_device && \
+			!(chastity_device && target_item == chastity_device.attached_toy))
 			return
 		if(!target_item.has_customized_identity() && !target_item.always_show_examine_link)
 			return
