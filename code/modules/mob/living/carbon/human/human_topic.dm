@@ -31,7 +31,7 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 			return
 		if(!(target_item in held_items) && !(target_item in get_equipped_items(TRUE)))
 			return
-		if(!target_item.has_customized_identity())
+		if(!target_item.has_customized_identity() && !target_item.always_show_examine_link)
 			return
 		var/list/item_examine = target_item.examine(usr)
 		if(length(item_examine))

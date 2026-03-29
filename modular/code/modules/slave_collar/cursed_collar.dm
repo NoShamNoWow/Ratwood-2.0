@@ -34,13 +34,32 @@
 		return FALSE
 	if(loc != wearer)
 		return FALSE
-	var/is_hemi = source.sexcon && source.sexcon.double_penis_type()
-	var/added = is_hemi ? 2 : 1
+	var/added = get_tally_increment_for_source(source)
 	received_cum_count += added
 	var/tally_msg = added == 1 ? "A metal scraping sound is briefly heard, a tally mark suddenly appears on [wearer]'s collar." : "A metal scraping sound is briefly heard, two tally marks suddenly appear on [wearer]'s collar."
 	for(var/mob/M in viewers(1, wearer))
 		to_chat(M, span_notice(tally_msg))
 	return TRUE
+
+/obj/item/clothing/neck/roguetown/cursed_collar/proc/get_tally_increment_for_source(mob/living/carbon/human/source)
+	if(!source?.sexcon)
+		return 1
+	if(!source.sexcon.double_penis_type())
+		return 1
+
+	var/action_type = source.sexcon.current_action
+	if(ispath(action_type, /datum/sex_action/anal_sex/double))
+		return 2
+	if(ispath(action_type, /datum/sex_action/vaginal_sex/double))
+		return 2
+	if(ispath(action_type, /datum/sex_action/slit_sex/double))
+		return 2
+	if(ispath(action_type, /datum/sex_action/throat_sex/double))
+		return 2
+	if(ispath(action_type, /datum/sex_action/double_penetration_sex))
+		return 2
+
+	return 1
 
 /obj/item/clothing/neck/roguetown/cursed_collar/proc/reset_received_cum_count()
 	received_cum_count = 0
