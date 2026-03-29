@@ -61,7 +61,7 @@
 	if(!I)
 		return ""
 	var/display_name = I.get_examine_string(user)
-	if(!I.has_customized_identity())
+	if(!I.has_customized_identity() && !I.always_show_examine_link)
 		return display_name
 	return "<a href='?src=[REF(src)];task=show_custom_item_info;item_ref=[REF(I)]'>[display_name]</a>"
 
