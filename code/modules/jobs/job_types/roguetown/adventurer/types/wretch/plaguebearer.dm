@@ -15,7 +15,6 @@
 	)
 	subclass_skills = list(
 		/datum/skill/combat/bows = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/knives = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT, // To escape grapplers, fuck you
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
@@ -51,22 +50,32 @@
 		/obj/item/flashlight/flare/torch/lantern/prelit = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/strongpoison = 1,
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpot = 1,	//Small health vial
-		/obj/item/rogueweapon/huntingknife/idagger/steel/corroded = 1,
 		)
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)
 	H.dna.species.soundpack_m = new /datum/voicepack/male/wizard()
 	if(H.mind)
-		var/weapons = list("Archery", "LET THERE BE PLAGUE!!!")
-		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
-		H.set_blindness(0)
-		switch(weapon_choice)
-			if("Archery")
-				H.adjust_skillrank_up_to(/datum/skill/combat/bows, 4, TRUE)
-				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
-				beltl = /obj/item/quiver/poisonarrows
-			if("LET THERE BE PLAGUE!!!")
-				H.adjust_skillrank_up_to(/datum/skill/magic/arcane, 4, TRUE)
-				backr = /obj/item/rogueweapon/woodstaff/toper
-				H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
-				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/acidsplash)
+		var/primary_weapons = list("A Poison Dagger", "A Rapier and Agility")
+		var/primary_weapon_choice = input(H, "Choose your signature weapon.", "TOOLS OF YOUR TRADE") as anything in primary_weapons
+		switch(primary_weapon_choice)
+			if("A Poison Dagger")
+				backpack_contents += /obj/item/rogueweapon/huntingknife/idagger/steel/corroded
+				H.adjust_skillrank_up_to(/datum/skill/combat/knives, 4, TRUE)
+				var/additional_weapons = list("Archery", "Magic")
+				var/additional_weapon_choice = input(H, "Effective, but risky. What gives you range?", "TOOLS OF YOUR TRADE") as anything in additional_weapons
+				H.set_blindness(0)
+				switch(additional_weapon_choice)
+					if("Archery")
+						H.adjust_skillrank_up_to(/datum/skill/combat/bows, 4, TRUE)
+						backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
+						beltl = /obj/item/quiver/poisonarrows
+					if("Magic")
+						H.adjust_skillrank_up_to(/datum/skill/magic/arcane, 4, TRUE)
+						backr = /obj/item/rogueweapon/woodstaff/toper
+						H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
+						H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/acidsplash)
+			if("A Rapier and Agility")
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
+				ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
+				beltl = /obj/item/rogueweapon/scabbard/sword
+				l_hand = /obj/item/rogueweapon/sword/rapier
 		wretch_select_bounty(H)
