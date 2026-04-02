@@ -1,6 +1,6 @@
 /datum/advclass/wretch/plaguebearer
-	name = "Plaguebearer"
-	tutorial = "A disgraced physician forced into exile and years of hardship, you have turned to a private practice surrounding the only things you've ever known - poisons and plague. Revel in the spreading of blight, and unleash craven pestilence."
+	name = "Malpractitioner"
+	tutorial = "A disgraced physician forced into exile and years of hardship, you have turned to a private practice. Operating beyond the bounds of the law, you work with traitors, heretics, and common criminals as easily as your peers would treat a peasant or craftsman."
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/wretch/plaguebearer
 	cmode_music = 'sound/music/combat_physician.ogg'
@@ -8,6 +8,7 @@
 	category_tags = list(CTAG_WRETCH)
 	traits_applied = list(TRAIT_CICERONE, TRAIT_NOSTINK, TRAIT_MEDICINE_EXPERT, TRAIT_ALCHEMY_EXPERT)
 	maximum_possible_slots = 1 //They spawn with killer's ice lol I'm limiting this shit 
+	extra_context = "This subclass has a choice of starting with a poisonable dagger and a bow with poison arrows, a poisonable dagger and magic, or a rapier and the ability to dodge well."
 	subclass_stats = list(
 		STATKEY_INT = 4,
 		STATKEY_PER = 3,
